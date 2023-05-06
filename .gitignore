@@ -1,0 +1,9 @@
+.idea
+Dist
+node_modules
+package-lock.json
+yarn-error.log
+Temp
+Files/Config/Config_KMOD.json
+Files/Config/Config.json
+Files/Config/Config_RP.json
