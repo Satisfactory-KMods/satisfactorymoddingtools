@@ -1,6 +1,6 @@
 {
   "name": "sfhelper",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "Src/Config/ToolConfig.ts",
   "scripts": {
@@ -14,6 +14,7 @@
     "packForMe": "tsc && node ./Dist/RunPackForMe.js",
     "SFP": "tsc && node ./Dist/RunPackPatreonForMe.js SF+",
     "MWave": "tsc && node ./Dist/RunPackPatreonForMe.js MWave",
+    "faxit": "tsc && node ./Dist/RunPackPatreonForMe.js faxit",
     "RSS": "tsc && node ./Dist/RunPackPatreonForMe.js RSS",
     "test": "tsc && node ./Dist/test.js"
   },
