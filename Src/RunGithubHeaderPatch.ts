@@ -1,6 +1,5 @@
-import { GithubHeaderPatcher } from "./Lib/GithubHeaderPatcher";
+import { GithubHeaderPatcher } from './Lib/GithubHeaderPatcher';
 
 let GithubPatcher = new GithubHeaderPatcher();
 
-GithubPatcher.Start().then( () => {
-} )
+GithubPatcher.Start().then(() => {});

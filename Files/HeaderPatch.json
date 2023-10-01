@@ -1,212 +1,191 @@
 {
-  "AutoAppender": [
-    {
-      "Find": "friend UFGColoredInstanceManager;",
-      "Append": " /**<KMods>*/ friend class UKPCLColoredStaticMesh; friend class URRDLColoredStaticMesh; /**</KMods>*/"
-    }
-  ],
-  "Includer": [
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Include": "AbstractInstanceManager.h",
-      "After": "Buildables/FGBuildable.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Include": "FGVehicle.h",
-      "After": "Resources/FGVehicleDescriptor.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGCreature.cpp",
-      "Include": "Creature/FGCreatureMovementComponent.h",
-      "After": "Creature/FGCreature.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGBuildableBeam.cpp",
-      "Include": "FGColoredInstanceMeshProxy.h",
-      "After": "FGBuildableBeam.h",
-      "If": ""
-    }
-  ],
+	"AutoAppender": [
+		{
+			"Find": "friend UFGColoredInstanceManager;",
+			"Append": " /**<KMods>*/ friend class UKPCLColoredStaticMesh; friend class URRDLColoredStaticMesh; /**</KMods>*/"
+		}
+	],
+	"Includer": [
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Include": "AbstractInstanceManager.h",
+			"After": "Buildables/FGBuildable.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Include": "FGVehicle.h",
+			"After": "Resources/FGVehicleDescriptor.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGCreature.cpp",
+			"Include": "Creature/FGCreatureMovementComponent.h",
+			"After": "Creature/FGCreature.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGBuildableBeam.cpp",
+			"Include": "FGColoredInstanceMeshProxy.h",
+			"After": "FGBuildableBeam.h",
+			"If": ""
+		}
+	],
 
+	"FunctionOverwrite": [
+		{
+			"ClassFileName": "FGBuildingDescriptor.cpp",
+			"Class": "UFGBuildingDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mBuildableClass ) )",
+				"\t\tmBuildableClass.GetDefaultObject()->mDisplayName;",
+				"\treturn Super::GetItemNameInternal();"
+			]
+		},
 
-  "FunctionOverwrite": [
-    {
-      "ClassFileName": "FGBuildingDescriptor.cpp",
-      "Class": "UFGBuildingDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mBuildableClass ) )",
-        "\t\tmBuildableClass.GetDefaultObject()->mDisplayName;",
-        "\treturn Super::GetItemNameInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildingDescriptor.cpp",
+			"Class": "UFGBuildingDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mBuildableClass ) )",
+				"\t\tmBuildableClass.GetDefaultObject()->mDescription;",
+				"\treturn Super::GetItemDescriptionInternal();"
+			]
+		},
 
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Class": "UFGVehicleDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mVehicleClass ) )",
+				"\t\tmVehicleClass.GetDefaultObject()->mDisplayName;",
+				"\treturn Super::GetItemNameInternal();"
+			]
+		},
 
-    {
-      "ClassFileName": "FGBuildingDescriptor.cpp",
-      "Class": "UFGBuildingDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mBuildableClass ) )",
-        "\t\tmBuildableClass.GetDefaultObject()->mDescription;",
-        "\treturn Super::GetItemDescriptionInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Class": "UFGVehicleDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mVehicleClass ) )",
+				"\t\tmVehicleClass.GetDefaultObject()->mDescription;",
+				"\treturn Super::GetItemDescriptionInternal();"
+			]
+		},
 
+		{
+			"ClassFileName": "FGDecorationTemplate.cpp",
+			"Class": "AFGDecorationTemplate",
+			"Function": "AFGDecorationTemplate",
+			"Template": "{Class}::{Function}() : Super()",
+			"FunctionContent": [
+				"\tthis->RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT(\"Root\"));",
+				"\t#if WITH_EDITORONLY_DATA",
+				"\t\tfor (UChildActorComponent* ComponentsFromSubclass : GetComponentsFromSubclass<UChildActorComponent>(UChildActorComponent::StaticClass())) {",
+				"\t\t\tComponentsFromSubclass->DestroyComponent();",
+				"\t\t}",
+				"\t#endif"
+			]
+		},
 
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Class": "UFGVehicleDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mVehicleClass ) )",
-        "\t\tmVehicleClass.GetDefaultObject()->mDisplayName;",
-        "\treturn Super::GetItemNameInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemDescription",
+			"Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
+			"FunctionContent": ["\tif (inClass)", "\t\treturn inClass.GetDefaultObject()->GetItemDescriptionInternal();", "\treturn FText();"]
+		},
 
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemName",
+			"Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
+			"FunctionContent": [
+				"\tif (!inClass)",
+				"\t\treturn FText();",
+				"\tif (inClass.GetDefaultObject())",
+				"\t\treturn inClass.GetDefaultObject()->GetItemNameInternal();",
+				"\treturn FText::FromString(inClass->GetName());"
+			]
+		},
 
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Class": "UFGVehicleDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mVehicleClass ) )",
-        "\t\tmVehicleClass.GetDefaultObject()->mDescription;",
-        "\treturn Super::GetItemDescriptionInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": ["\treturn mDescription;"]
+		},
 
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemNameInternalAsString",
+			"Template": "FString {Class}::{Function}() const",
+			"FunctionContent": ["\treturn GetItemNameInternal().ToString();"]
+		},
 
-    {
-      "ClassFileName": "FGDecorationTemplate.cpp",
-      "Class": "AFGDecorationTemplate",
-      "Function": "AFGDecorationTemplate",
-      "Template": "{Class}::{Function}() : Super()",
-      "FunctionContent": [
-        "\tthis->RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT(\"Root\"));",
-        "\t#if WITH_EDITORONLY_DATA",
-        "\t\tfor (UChildActorComponent* ComponentsFromSubclass : GetComponentsFromSubclass<UChildActorComponent>(UChildActorComponent::StaticClass())) {",
-        "\t\t\tComponentsFromSubclass->DestroyComponent();",
-        "\t\t}",
-        "\t#endif"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": ["\treturn mDisplayName;"]
+		},
 
-
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemDescription",
-      "Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
-      "FunctionContent": [
-        "\tif (inClass)",
-        "\t\treturn inClass.GetDefaultObject()->GetItemDescriptionInternal();",
-        "\treturn FText();"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemName",
-      "Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
-      "FunctionContent": [
-        "\tif (!inClass)",
-        "\t\treturn FText();",
-        "\tif (inClass.GetDefaultObject())",
-        "\t\treturn inClass.GetDefaultObject()->GetItemNameInternal();",
-        "\treturn FText::FromString(inClass->GetName());"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn mDescription;"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemNameInternalAsString",
-      "Template": "FString {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn GetItemNameInternal().ToString();"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn mDisplayName;"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "EndPlay",
-      "Template": "void {Class}::{Function}(const EEndPlayReason::Type endPlayReason)",
-      "FunctionContent": [
-        "\t#if WITH_EDITOR",
-        "\tif( this && GetWorld() )",
-        "\t{",
-        "\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
-        "\t};",
-        "\tmInstanceHandles.Empty();",
-        "\t#endif"
-      ]
-    }
-  ],
-  "AutoReplacer": [
-    {
-      "Find": "UPROPERTY( VisibleDefaultsOnly, Category = \"Icon Data\" )",
-      "Replace": "UPROPERTY( EditDefaultsOnly, Category = \"Icon Data\" )"
-    },
-    {
-      "Find": "AFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)",
-      "Replace": "\r\nAFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super( /**<KMods>*/ ObjectInitializer.SetDefaultSubobjectClass( this->CharacterMovementComponentName, UFGCreatureMovementComponent::StaticClass() ) /**</KMods>*/ )"
-    },
-    {
-      "Find": "DEFINE_LOG_CATEGORY(LogGame);",
-      "Replace": "/**<KMods> DEFINE_LOG_CATEGORY(LogGame)*/"
-    },
-    {
-      "Find": "DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
-      "Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
-    },
-    {
-      "Find": "DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
-      "Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
-    },
-    {
-      "Find": "LogGame",
-      "Replace": "/**<KMods> LogGame*/LogTemp"
-    },
-    {
-      "Find": "LogBuilding",
-      "Replace": "/**<KMods> LogBuilding*/LogTemp"
-    }
-  ]
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "EndPlay",
+			"Template": "void {Class}::{Function}(const EEndPlayReason::Type endPlayReason)",
+			"FunctionContent": [
+				"\t#if WITH_EDITOR",
+				"\tif( this && GetWorld() )",
+				"\t{",
+				"\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
+				"\t};",
+				"\tmInstanceHandles.Empty();",
+				"\t#endif"
+			]
+		}
+	],
+	"AutoReplacer": [
+		{
+			"Find": "UPROPERTY( VisibleDefaultsOnly, Category = \"Icon Data\" )",
+			"Replace": "UPROPERTY( EditDefaultsOnly, Category = \"Icon Data\" )"
+		},
+		{
+			"Find": "AFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)",
+			"Replace": "\r\nAFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super( /**<KMods>*/ ObjectInitializer.SetDefaultSubobjectClass( this->CharacterMovementComponentName, UFGCreatureMovementComponent::StaticClass() ) /**</KMods>*/ )"
+		},
+		{
+			"Find": "DEFINE_LOG_CATEGORY(LogGame);",
+			"Replace": "/**<KMods> DEFINE_LOG_CATEGORY(LogGame)*/"
+		},
+		{
+			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
+			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
+		},
+		{
+			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
+			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
+		},
+		{
+			"Find": "LogGame",
+			"Replace": "/**<KMods> LogGame*/LogTemp"
+		},
+		{
+			"Find": "LogBuilding",
+			"Replace": "/**<KMods> LogBuilding*/LogTemp"
+		}
+	]
 }

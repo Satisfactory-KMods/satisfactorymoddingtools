@@ -1,1 +1,1 @@
-import "./Lib/LocalizationHelper";
+import './Lib/LocalizationHelper';

@@ -1,61 +1,35 @@
 {
-  "General": {
-    "ProjectFolder": "D:\\SFModding\\Update6_KMods",
-    "ModPluginDir": "Plugins\\ModRef",
-    "PluginDir": "Plugins",
-    "ContentDir": "Content",
-    "CPPSourceDir": "Source",
-    "UPluginFileName": ".uplugin"
-  },
-  "Localization": {
-    "CopyFrom": "Content\\Localization",
-    "LocPath": "../../../FactoryGame/Mods/ModRef/Localization/ModRef"
-  },
-  "VersionControl": {
-    "SMLVersion": "^3.4.1",
-    "OnlyUseVersionIncrease": false,
-    "ModVersionOverwrite": {
-      "KLib": {
-        "version_Minor": true
-      },
-      "KDecoLib": {
-        "version_Minor": true
-      }
-    },
-    "VersionIncrease": [
-      "RefinedPower",
-      "RefinedRDLib",
-      "ModularUI",
-      "FicsitFarming",
-      "AB_FluidExtras",
-      "KBlueprintDesignPlus"
-    ],
-    "UseExactVersion": [
-      "RefinedPower",
-      "RefinedRDLib",
-      "ModularUI",
-      "FicsitFarming",
-      "AB_FluidExtras",
-      "KBlueprintDesignPlus"
-    ],
-    "FicsitUserToQuery": [
-      "3cMuLsemCEZUDc",
-      "4fBtWTJgLG18DY",
-      "9uvZtCA4cM6H4q"
-    ]
-  },
-  "Upgrade": {
-    "PatchBlueprints": false,
-    "UsedBranchIdx": 2,
-    "GithubHeaderBranches": [
-      "master",
-      "dev",
-      "auto-header-update"
-    ],
-    "PluginsToCopy": [
-      "SML",
-      "Alpakit",
-      "AbstractInstance"
-    ]
-  }
+	"General": {
+		"ProjectFolder": "D:\\SFModding\\Update6_KMods",
+		"ModPluginDir": "Plugins\\ModRef",
+		"PluginDir": "Plugins",
+		"ContentDir": "Content",
+		"CPPSourceDir": "Source",
+		"UPluginFileName": ".uplugin"
+	},
+	"Localization": {
+		"CopyFrom": "Content\\Localization",
+		"LocPath": "../../../FactoryGame/Mods/ModRef/Localization/ModRef"
+	},
+	"VersionControl": {
+		"SMLVersion": "^3.4.1",
+		"OnlyUseVersionIncrease": false,
+		"ModVersionOverwrite": {
+			"KLib": {
+				"version_Minor": true
+			},
+			"KDecoLib": {
+				"version_Minor": true
+			}
+		},
+		"VersionIncrease": ["RefinedPower", "RefinedRDLib", "ModularUI", "FicsitFarming", "AB_FluidExtras", "KBlueprintDesignPlus"],
+		"UseExactVersion": ["RefinedPower", "RefinedRDLib", "ModularUI", "FicsitFarming", "AB_FluidExtras", "KBlueprintDesignPlus"],
+		"FicsitUserToQuery": ["3cMuLsemCEZUDc", "4fBtWTJgLG18DY", "9uvZtCA4cM6H4q"]
+	},
+	"Upgrade": {
+		"PatchBlueprints": false,
+		"UsedBranchIdx": 2,
+		"GithubHeaderBranches": ["master", "dev", "auto-header-update"],
+		"PluginsToCopy": ["SML", "Alpakit", "AbstractInstance"]
+	}
 }

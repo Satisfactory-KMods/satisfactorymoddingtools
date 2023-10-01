@@ -1,6 +1,6 @@
-let obj : { string : string };
+let obj: { string: string };
 obj = {
-	string : `void AFGBuildable::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+	string: `void AFGBuildable::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
 {
 \tSuper::PostEditChangeProperty(PropertyChangedEvent);
 \tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mInstanceData) )
@@ -18,5 +18,5 @@ obj = {
 obj.string = `/**<KMods>*/${obj.string}/**</KMods>*/`;
 let OutString = JSON.stringify(obj);
 //OutString = OutString.replaceAll("\\t", "");
-OutString = OutString.replaceAll("\\n", "\\r\\n");
-console.log( OutString );
+OutString = OutString.replaceAll('\\n', '\\r\\n');
+console.log(OutString);

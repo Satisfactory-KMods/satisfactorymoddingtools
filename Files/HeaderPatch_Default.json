@@ -1,415 +1,373 @@
 {
-  "AutoAppender": [
-    {
-      "Find": "friend UFGColoredInstanceManager;",
-      "Append": " /**<KMods>*/ friend class UKPCLColoredStaticMesh; friend class URRDLColoredStaticMesh; /**</KMods>*/"
-    }
-  ],
-  "Includer": [
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Include": "AbstractInstanceManager.h",
-      "After": "Buildables/FGBuildable.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Include": "FGVehicle.h",
-      "After": "Resources/FGVehicleDescriptor.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGCreature.cpp",
-      "Include": "Creature/FGCreatureMovementComponent.h",
-      "After": "Creature/FGCreature.h",
-      "If": ""
-    },
-    {
-      "ClassFileName": "FGBuildableBeam.cpp",
-      "Include": "FGColoredInstanceMeshProxy.h",
-      "After": "FGBuildableBeam.h",
-      "If": ""
-    }
-  ],
+	"AutoAppender": [
+		{
+			"Find": "friend UFGColoredInstanceManager;",
+			"Append": " /**<KMods>*/ friend class UKPCLColoredStaticMesh; friend class URRDLColoredStaticMesh; /**</KMods>*/"
+		}
+	],
+	"Includer": [
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Include": "AbstractInstanceManager.h",
+			"After": "Buildables/FGBuildable.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Include": "FGVehicle.h",
+			"After": "Resources/FGVehicleDescriptor.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGCreature.cpp",
+			"Include": "Creature/FGCreatureMovementComponent.h",
+			"After": "Creature/FGCreature.h",
+			"If": ""
+		},
+		{
+			"ClassFileName": "FGBuildableBeam.cpp",
+			"Include": "FGColoredInstanceMeshProxy.h",
+			"After": "FGBuildableBeam.h",
+			"If": ""
+		}
+	],
 
+	"FunctionOverwrite": [
+		{
+			"ClassFileName": "FGBuildingDescriptor.cpp",
+			"Class": "UFGBuildingDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mBuildableClass ) )",
+				"\t\tmBuildableClass.GetDefaultObject()->mDisplayName;",
+				"\treturn Super::GetItemNameInternal();"
+			]
+		},
 
-  "FunctionOverwrite": [
-    {
-      "ClassFileName": "FGBuildingDescriptor.cpp",
-      "Class": "UFGBuildingDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mBuildableClass ) )",
-        "\t\tmBuildableClass.GetDefaultObject()->mDisplayName;",
-        "\treturn Super::GetItemNameInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildingDescriptor.cpp",
+			"Class": "UFGBuildingDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mBuildableClass ) )",
+				"\t\tmBuildableClass.GetDefaultObject()->mDescription;",
+				"\treturn Super::GetItemDescriptionInternal();"
+			]
+		},
 
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Class": "UFGVehicleDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mVehicleClass ) )",
+				"\t\tmVehicleClass.GetDefaultObject()->mDisplayName;",
+				"\treturn Super::GetItemNameInternal();"
+			]
+		},
 
-    {
-      "ClassFileName": "FGBuildingDescriptor.cpp",
-      "Class": "UFGBuildingDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mBuildableClass ) )",
-        "\t\tmBuildableClass.GetDefaultObject()->mDescription;",
-        "\treturn Super::GetItemDescriptionInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGVehicleDescriptor.cpp",
+			"Class": "UFGVehicleDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": [
+				"\tif( IsValid( mVehicleClass ) )",
+				"\t\tmVehicleClass.GetDefaultObject()->mDescription;",
+				"\treturn Super::GetItemDescriptionInternal();"
+			]
+		},
 
+		{
+			"ClassFileName": "FGDecorationTemplate.cpp",
+			"Class": "AFGDecorationTemplate",
+			"Function": "AFGDecorationTemplate",
+			"Template": "{Class}::{Function}() : Super()",
+			"FunctionContent": [
+				"\tthis->RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT(\"Root\"));",
+				"\t#if WITH_EDITORONLY_DATA",
+				"\t\t//mChildActorComponent = CreateDefaultSubobject<UChildActorComponent>(TEXT(\"ChildActorComponent\"));",
+				"\t\t//mChildActorComponent->SetupAttachment(RootComponent);",
+				"\t\t//mChildActorComponent->MarkAsEditorOnlySubobject();",
+				"\t\t//mChildActorComponent->bIsEditorOnly = true;",
+				"\t#endif"
+			]
+		},
 
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Class": "UFGVehicleDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mVehicleClass ) )",
-        "\t\tmVehicleClass.GetDefaultObject()->mDisplayName;",
-        "\treturn Super::GetItemNameInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemDescription",
+			"Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
+			"FunctionContent": ["\tif (inClass)", "\t\treturn inClass.GetDefaultObject()->GetItemDescriptionInternal();", "\treturn FText();"]
+		},
 
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemName",
+			"Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
+			"FunctionContent": [
+				"\tif (!inClass)",
+				"\t\treturn FText();",
+				"\tif (inClass.GetDefaultObject())",
+				"\t\treturn inClass.GetDefaultObject()->GetItemNameInternal();",
+				"\treturn FText::FromString(inClass->GetName());"
+			]
+		},
 
-    {
-      "ClassFileName": "FGVehicleDescriptor.cpp",
-      "Class": "UFGVehicleDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\tif( IsValid( mVehicleClass ) )",
-        "\t\tmVehicleClass.GetDefaultObject()->mDescription;",
-        "\treturn Super::GetItemDescriptionInternal();"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemDescriptionInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": ["\treturn mDescription;"]
+		},
 
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemNameInternalAsString",
+			"Template": "FString {Class}::{Function}() const",
+			"FunctionContent": ["\treturn GetItemNameInternal().ToString();"]
+		},
 
-    {
-      "ClassFileName": "FGDecorationTemplate.cpp",
-      "Class": "AFGDecorationTemplate",
-      "Function": "AFGDecorationTemplate",
-      "Template": "{Class}::{Function}() : Super()",
-      "FunctionContent": [
-        "\tthis->RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT(\"Root\"));",
-        "\t#if WITH_EDITORONLY_DATA",
-        "\t\t//mChildActorComponent = CreateDefaultSubobject<UChildActorComponent>(TEXT(\"ChildActorComponent\"));",
-        "\t\t//mChildActorComponent->SetupAttachment(RootComponent);",
-        "\t\t//mChildActorComponent->MarkAsEditorOnlySubobject();",
-        "\t\t//mChildActorComponent->bIsEditorOnly = true;",
-        "\t#endif"
-      ]
-    },
+		{
+			"ClassFileName": "FGItemDescriptor.cpp",
+			"Class": "UFGItemDescriptor",
+			"Function": "GetItemNameInternal",
+			"Template": "FText {Class}::{Function}() const",
+			"FunctionContent": ["\treturn mDisplayName;"]
+		},
 
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "EndPlay",
+			"Template": "void {Class}::{Function}(const EEndPlayReason::Type endPlayReason)",
+			"FunctionContent": [
+				"\t#if WITH_EDITOR",
+				"\tif( this && GetWorld() )",
+				"\t{",
+				"\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
+				"\t};",
+				"\tmInstanceHandles.Empty();",
+				"\t#endif"
+			]
+		},
 
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemDescription",
-      "Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
-      "FunctionContent": [
-        "\tif (inClass)",
-        "\t\treturn inClass.GetDefaultObject()->GetItemDescriptionInternal();",
-        "\treturn FText();"
-      ]
-    },
+		{
+			"ClassFileName": "FGWorldSettings.cpp",
+			"Class": "AFGWorldSettings",
+			"Function": "BeginDestroy",
+			"Template": "void {Class}::{Function}()",
+			"FunctionContent": ["\tSuper::BeginDestroy();"]
+		},
 
+		{
+			"ClassFileName": "FGBuildableConveyorAttachment.cpp",
+			"Class": "AFGBuildableConveyorAttachmentLightweight",
+			"Function": "AFGBuildableConveyorAttachmentLightweight",
+			"Template": "{Class}::{Function}() : Super()",
+			"FunctionContent": ["\tRootComponent = nullptr;"]
+		},
 
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemName",
-      "Template": "FText {Class}::{Function}(TSubclassOf< UFGItemDescriptor > inClass)",
-      "FunctionContent": [
-        "\tif (!inClass)",
-        "\t\treturn FText();",
-        "\tif (inClass.GetDefaultObject())",
-        "\t\treturn inClass.GetDefaultObject()->GetItemNameInternal();",
-        "\treturn FText::FromString(inClass->GetName());"
-      ]
-    },
+		{
+			"ClassFileName": "FGWorldSettings.cpp",
+			"Class": "AFGWorldSettings",
+			"Function": "PreInitializeComponents",
+			"Template": "void {Class}::{Function}()",
+			"FunctionContent": ["\tSuper::PreInitializeComponents();"]
+		},
 
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "RemoveInstances_Native",
+			"Template": "void {Class}::{Function}()",
+			"FunctionContent": [
+				"\tif( this && GetWorld() )",
+				"\t{",
+				"\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
+				"\t\tmHasSetupInstances = false;",
+				"\t}"
+			]
+		},
 
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemDescriptionInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn mDescription;"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "SetupInstances_Native",
+			"Template": "void {Class}::{Function}(bool bInitializeHidden)",
+			"FunctionContent": [
+				"\tif( !mCanContainLightweightInstances )",
+				"\t{",
+				"\t\tRemoveInstances_Native();",
+				"\t\treturn;",
+				"\t}",
+				"\t",
 
+				"\tif( !mHasSetupInstances )",
+				"\t{",
+				"\t\tRemoveInstances_Native();",
+				"\t}",
+				"\t",
 
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemNameInternalAsString",
-      "Template": "FString {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn GetItemNameInternal().ToString();"
-      ]
-    },
+				"\tif( this && GetWorld() && IsValid( mInstanceDataCDO ) && ( !mHasSetupInstances && mInstanceHandles.Num() == 0 ) )",
+				"\t{",
+				"\t\tAAbstractInstanceManager* Manager = AAbstractInstanceManager::GetInstanceManager( GetWorld() );",
+				"\t\tif( IsValid( Manager ) )",
+				"\t\t{",
+				"\t\t\tfor (FInstanceData InstanceData : mInstanceDataCDO->GetInstanceData() )",
+				"\t\t\t{",
+				"\t\t\t\tif( IsValid( InstanceData.StaticMesh ) && !InstanceData.OverridenMaterials.Contains( nullptr ) )",
+				"\t\t\t\t{",
+				"\t\t\t\t\tFInstanceHandle* Handle = new FInstanceHandle();",
+				"\t\t\t\t\tManager->SetInstanced( this, GetActorTransform(), InstanceData, Handle, bInitializeHidden );",
+				"\t\t\t\t\tmInstanceHandles.Add( Handle );",
+				"\t\t\t\t}",
+				"\t\t\t}",
+				"\t\t}",
+				"\t}",
 
+				"\telse if( this && GetWorld() && IsValid( mInstanceDataCDO ) && mInstanceHandles.Num() > 0 )",
+				"\t{",
+				"\t\tfor( int32 Idx = 0; Idx < mInstanceHandles.Num(); ++Idx )",
+				"\t\t{",
+				"\t\t\tif( mInstanceDataCDO->GetInstanceData().IsValidIndex( Idx ) && IsValid( mInstanceHandles[ Idx ]->GetInstanceComponent() ) )",
+				"\t\t\t{",
+				"\t\t\t\tmInstanceHandles[ Idx ]->UpdateTransform( mInstanceDataCDO->GetInstanceData()[ Idx ].RelativeTransform );",
+				"\t\t\t}",
+				"\t\t}",
+				"\t}",
+				"\t",
+				"\tmHasSetupInstances = true;"
+			]
+		},
 
-    {
-      "ClassFileName": "FGItemDescriptor.cpp",
-      "Class": "UFGItemDescriptor",
-      "Function": "GetItemNameInternal",
-      "Template": "FText {Class}::{Function}() const",
-      "FunctionContent": [
-        "\treturn mDisplayName;"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "SetupInstances_Implementation",
+			"Template": "void {Class}::{Function}(bool bInitializeHidden)",
+			"FunctionContent": ["\tSetupInstances_Native( bInitializeHidden );"]
+		},
 
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "RemoveInstances_Implementation",
+			"Template": "void {Class}::{Function}()",
+			"FunctionContent": ["\tRemoveInstances_Native();"]
+		},
 
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "EndPlay",
-      "Template": "void {Class}::{Function}(const EEndPlayReason::Type endPlayReason)",
-      "FunctionContent": [
-        "\t#if WITH_EDITOR",
-        "\tif( this && GetWorld() )",
-        "\t{",
-        "\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
-        "\t};",
-        "\tmInstanceHandles.Empty();",
-        "\t#endif"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "GetActorLightweightInstanceData_Implementation",
+			"Template": "TArray<struct FInstanceData> {Class}::{Function}()",
+			"FunctionContent": [
+				"\tif( IsValid( mInstanceDataCDO ) )",
+				"\t{",
+				"\t\treturn mInstanceDataCDO->GetInstanceData();",
+				"\t}",
+				"\treturn TArray<struct FInstanceData>();"
+			]
+		},
 
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "OnConstruction",
+			"Template": "void {Class}::{Function}(const FTransform& transform)",
+			"FunctionContent": [
+				"\tSuper::OnConstruction(transform);",
+				"\tRemoveInstances_Native();",
+				"\tFTimerHandle Handle1;",
+				"\t",
+				"\tGetWorldTimerManager().SetTimer( Handle1, FTimerDelegate::CreateWeakLambda(this, [ this ]() {",
+				"\t\tSetupInstances_Native();",
+				"\t} ), 0.1f, false );"
+			]
+		},
 
-    {
-      "ClassFileName": "FGWorldSettings.cpp",
-      "Class": "AFGWorldSettings",
-      "Function": "BeginDestroy",
-      "Template": "void {Class}::{Function}()",
-      "FunctionContent": [
-        "\tSuper::BeginDestroy();"
-      ]
-    },
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "PostEditChangeChainProperty",
+			"Template": "void {Class}::{Function}(FPropertyChangedChainEvent& PropertyChangedEvent)",
+			"FunctionContent": [
+				"\tSuper::PostEditChangeChainProperty(PropertyChangedEvent);",
+				"\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mInstanceData) )",
+				"\t{",
+				"\t\tmInstanceDataCDO = mInstanceData;",
+				"\t\tmCanContainLightweightInstances = IsValid( mInstanceDataCDO );",
+				"\t\tmHasSetupInstances = false;",
+				"\t}",
+				"\t",
+				"\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mBuildableSparseDataEditorObject) )",
+				"\t{",
+				"\t\tmBuildableSparseDataCDO = mBuildableSparseDataEditorObject;",
+				"\t}"
+			]
+		},
 
-
-    {
-      "ClassFileName": "FGBuildableConveyorAttachment.cpp",
-      "Class": "AFGBuildableConveyorAttachmentLightweight",
-      "Function": "AFGBuildableConveyorAttachmentLightweight",
-      "Template": "{Class}::{Function}() : Super()",
-      "FunctionContent": [
-        "\tRootComponent = nullptr;"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGWorldSettings.cpp",
-      "Class": "AFGWorldSettings",
-      "Function": "PreInitializeComponents",
-      "Template": "void {Class}::{Function}()",
-      "FunctionContent": [
-        "\tSuper::PreInitializeComponents();"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "RemoveInstances_Native",
-      "Template": "void {Class}::{Function}()",
-      "FunctionContent": [
-        "\tif( this && GetWorld() )",
-        "\t{",
-        "\t\tAAbstractInstanceManager::RemoveInstances( GetWorld(), mInstanceHandles, true );",
-        "\t\tmHasSetupInstances = false;",
-        "\t}"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "SetupInstances_Native",
-      "Template": "void {Class}::{Function}(bool bInitializeHidden)",
-      "FunctionContent": [
-        "\tif( !mCanContainLightweightInstances )",
-        "\t{",
-        "\t\tRemoveInstances_Native();",
-        "\t\treturn;",
-        "\t}",
-        "\t",
-
-        "\tif( !mHasSetupInstances )",
-        "\t{",
-        "\t\tRemoveInstances_Native();",
-        "\t}",
-        "\t",
-
-        "\tif( this && GetWorld() && IsValid( mInstanceDataCDO ) && ( !mHasSetupInstances && mInstanceHandles.Num() == 0 ) )",
-        "\t{",
-        "\t\tAAbstractInstanceManager* Manager = AAbstractInstanceManager::GetInstanceManager( GetWorld() );",
-        "\t\tif( IsValid( Manager ) )",
-        "\t\t{",
-        "\t\t\tfor (FInstanceData InstanceData : mInstanceDataCDO->GetInstanceData() )",
-        "\t\t\t{",
-        "\t\t\t\tif( IsValid( InstanceData.StaticMesh ) && !InstanceData.OverridenMaterials.Contains( nullptr ) )",
-        "\t\t\t\t{",
-        "\t\t\t\t\tFInstanceHandle* Handle = new FInstanceHandle();",
-        "\t\t\t\t\tManager->SetInstanced( this, GetActorTransform(), InstanceData, Handle, bInitializeHidden );",
-        "\t\t\t\t\tmInstanceHandles.Add( Handle );",
-        "\t\t\t\t}",
-        "\t\t\t}",
-        "\t\t}",
-        "\t}",
-
-        "\telse if( this && GetWorld() && IsValid( mInstanceDataCDO ) && mInstanceHandles.Num() > 0 )",
-        "\t{",
-        "\t\tfor( int32 Idx = 0; Idx < mInstanceHandles.Num(); ++Idx )",
-        "\t\t{",
-        "\t\t\tif( mInstanceDataCDO->GetInstanceData().IsValidIndex( Idx ) && IsValid( mInstanceHandles[ Idx ]->GetInstanceComponent() ) )",
-        "\t\t\t{",
-        "\t\t\t\tmInstanceHandles[ Idx ]->UpdateTransform( mInstanceDataCDO->GetInstanceData()[ Idx ].RelativeTransform );",
-        "\t\t\t}",
-        "\t\t}",
-        "\t}",
-        "\t",
-        "\tmHasSetupInstances = true;"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "SetupInstances_Implementation",
-      "Template": "void {Class}::{Function}(bool bInitializeHidden)",
-      "FunctionContent": [
-        "\tSetupInstances_Native( bInitializeHidden );"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "RemoveInstances_Implementation",
-      "Template": "void {Class}::{Function}()",
-      "FunctionContent": [
-        "\tRemoveInstances_Native();"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "GetActorLightweightInstanceData_Implementation",
-      "Template": "TArray<struct FInstanceData> {Class}::{Function}()",
-      "FunctionContent": [
-        "\tif( IsValid( mInstanceDataCDO ) )",
-        "\t{",
-        "\t\treturn mInstanceDataCDO->GetInstanceData();",
-        "\t}",
-        "\treturn TArray<struct FInstanceData>();"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "OnConstruction",
-      "Template": "void {Class}::{Function}(const FTransform& transform)",
-      "FunctionContent": [
-        "\tSuper::OnConstruction(transform);",
-        "\tRemoveInstances_Native();",
-        "\tFTimerHandle Handle1;",
-        "\t",
-        "\tGetWorldTimerManager().SetTimer( Handle1, FTimerDelegate::CreateWeakLambda(this, [ this ]() {",
-        "\t\tSetupInstances_Native();",
-        "\t} ), 0.1f, false );"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "PostEditChangeChainProperty",
-      "Template": "void {Class}::{Function}(FPropertyChangedChainEvent& PropertyChangedEvent)",
-      "FunctionContent": [
-        "\tSuper::PostEditChangeChainProperty(PropertyChangedEvent);",
-        "\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mInstanceData) )",
-        "\t{",
-        "\t\tmInstanceDataCDO = mInstanceData;",
-        "\t\tmCanContainLightweightInstances = IsValid( mInstanceDataCDO );",
-        "\t\tmHasSetupInstances = false;",
-        "\t}",
-        "\t",
-        "\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mBuildableSparseDataEditorObject) )",
-        "\t{",
-        "\t\tmBuildableSparseDataCDO = mBuildableSparseDataEditorObject;",
-        "\t}"
-      ]
-    },
-
-
-    {
-      "ClassFileName": "FGBuildable.cpp",
-      "Class": "AFGBuildable",
-      "Function": "PostEditChangeProperty",
-      "Template": "void {Class}::{Function}(FPropertyChangedEvent& PropertyChangedEvent)",
-      "FunctionContent": [
-        "\tSuper::PostEditChangeProperty(PropertyChangedEvent);",
-        "\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mInstanceData) )",
-        "\t{",
-        "\t\tmInstanceDataCDO = mInstanceData;",
-        "\t\tmCanContainLightweightInstances = IsValid( mInstanceDataCDO );",
-        "\t\tmHasSetupInstances = false;",
-        "\t}",
-        "\t",
-        "\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mBuildableSparseDataEditorObject) )",
-        "\t{",
-        "\t\tmBuildableSparseDataCDO = mBuildableSparseDataEditorObject;",
-        "\t}"
-      ]
-    }
-  ],
-  "AutoReplacer": [
-    {
-      "Find": "//UPROPERTY(EditAnywhere, meta = ( AllowPrivateAccess = \"true\") )",
-      "Replace": "/**<KMods>*/ //UPROPERTY(EditAnywhere, meta = ( AllowPrivateAccess = \"true\") )/**</KMods>*/"
-    },
-    {
-      "Find": "//UChildActorComponent* mChildActorComponent;",
-      "Replace": "/**<KMods>*/ //UChildActorComponent* mChildActorComponent;/**</KMods>*/"
-    },
-    {
-      "Find": "AFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)",
-      "Replace": "\r\nAFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super( /**<KMods>*/ ObjectInitializer.SetDefaultSubobjectClass( this->CharacterMovementComponentName, UFGCreatureMovementComponent::StaticClass() ) /**</KMods>*/ )"
-    },
-    {
-      "Find": "DEFINE_LOG_CATEGORY(LogGame);",
-      "Replace": "/**<KMods> DEFINE_LOG_CATEGORY(LogGame)*/"
-    },
-    {
-      "Find": "DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
-      "Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
-    },
-    {
-      "Find": "DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
-      "Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
-    },
-    {
-      "Find": "LogGame",
-      "Replace": "/**<KMods> LogGame*/LogTemp"
-    },
-    {
-      "Find": "LogBuilding",
-      "Replace": "/**<KMods> LogBuilding*/LogTemp"
-    }
-  ]
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "PostEditChangeProperty",
+			"Template": "void {Class}::{Function}(FPropertyChangedEvent& PropertyChangedEvent)",
+			"FunctionContent": [
+				"\tSuper::PostEditChangeProperty(PropertyChangedEvent);",
+				"\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mInstanceData) )",
+				"\t{",
+				"\t\tmInstanceDataCDO = mInstanceData;",
+				"\t\tmCanContainLightweightInstances = IsValid( mInstanceDataCDO );",
+				"\t\tmHasSetupInstances = false;",
+				"\t}",
+				"\t",
+				"\tif( PropertyChangedEvent.GetPropertyName() == GET_MEMBER_NAME_CHECKED( AFGBuildable, mBuildableSparseDataEditorObject) )",
+				"\t{",
+				"\t\tmBuildableSparseDataCDO = mBuildableSparseDataEditorObject;",
+				"\t}"
+			]
+		}
+	],
+	"AutoReplacer": [
+		{
+			"Find": "//UPROPERTY(EditAnywhere, meta = ( AllowPrivateAccess = \"true\") )",
+			"Replace": "/**<KMods>*/ //UPROPERTY(EditAnywhere, meta = ( AllowPrivateAccess = \"true\") )/**</KMods>*/"
+		},
+		{
+			"Find": "//UChildActorComponent* mChildActorComponent;",
+			"Replace": "/**<KMods>*/ //UChildActorComponent* mChildActorComponent;/**</KMods>*/"
+		},
+		{
+			"Find": "AFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)",
+			"Replace": "\r\nAFGCreature::AFGCreature(const FObjectInitializer& ObjectInitializer) : Super( /**<KMods>*/ ObjectInitializer.SetDefaultSubobjectClass( this->CharacterMovementComponentName, UFGCreatureMovementComponent::StaticClass() ) /**</KMods>*/ )"
+		},
+		{
+			"Find": "DEFINE_LOG_CATEGORY(LogGame);",
+			"Replace": "/**<KMods> DEFINE_LOG_CATEGORY(LogGame)*/"
+		},
+		{
+			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
+			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
+		},
+		{
+			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
+			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
+		},
+		{
+			"Find": "LogGame",
+			"Replace": "/**<KMods> LogGame*/LogTemp"
+		},
+		{
+			"Find": "LogBuilding",
+			"Replace": "/**<KMods> LogBuilding*/LogTemp"
+		}
+	]
 }
