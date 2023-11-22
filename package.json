@@ -15,7 +15,8 @@
 		"SFP": "tsc && node ./Dist/RunPackPatreonForMe.js SF+",
 		"MWave": "tsc && node ./Dist/RunPackPatreonForMe.js MWave",
 		"faxit": "tsc && node ./Dist/RunPackPatreonForMe.js faxit",
-		"RSS": "tsc && node ./Dist/RunPackPatreonForMe.js RSS",
+		"RSS": "tsc && node ./Dist/RunPackPatreonForMe.js",
+		"p": "tsc && node ./Dist/RunPackPatreonForMe.js RSS",
 		"test": "tsc && node ./Dist/test.js"
 	},
 	"author": "Kyrium",

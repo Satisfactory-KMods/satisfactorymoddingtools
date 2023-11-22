@@ -55,7 +55,7 @@ export class FicsitApiHelper {
 	public async StartQuery(): Promise<void> {
 		for (const User of VersionControlConfig.FicsitUserToQuery) {
 			console.log('Query for user:', User);
-			let Request = await request(this.FicsitApi, this.GetGraph(User)).catch((e) => {
+			let Request: any = await request(this.FicsitApi, this.GetGraph(User)).catch((e) => {
 				console.log('Ficsit GraphQL failed', e);
 			});
 

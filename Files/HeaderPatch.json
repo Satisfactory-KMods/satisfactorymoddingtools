@@ -2,7 +2,7 @@
 	"AutoAppender": [
 		{
 			"Find": "friend UFGColoredInstanceManager;",
-			"Append": " /**<KMods>*/ friend class UKPCLColoredStaticMesh; friend class URRDLColoredStaticMesh; /**</KMods>*/"
+			"Append": "\n\t\t/**<KMods>*/ \n\t\tfriend class UKPCLColoredStaticMesh; \n\t\tfriend class URRDLColoredStaticMesh; \n\t\t/**</KMods>*/"
 		}
 	],
 	"Includer": [
@@ -141,7 +141,6 @@
 			"Template": "FText {Class}::{Function}() const",
 			"FunctionContent": ["\treturn mDisplayName;"]
 		},
-
 		{
 			"ClassFileName": "FGBuildable.cpp",
 			"Class": "AFGBuildable",
@@ -155,6 +154,23 @@
 				"\t};",
 				"\tmInstanceHandles.Empty();",
 				"\t#endif"
+			]
+		},
+		{
+			"ClassFileName": "FGBuildable.cpp",
+			"Class": "AFGBuildable",
+			"Function": "SetupInstances_Native",
+			"Template": "void {Class}::{Function}( bool bInitializeHidden )",
+			"FunctionContent": [
+				"\tif( this && GetWorld( ) && IsValid( mInstanceDataCDO ) ) {",
+				"\t\tfor( FInstanceData InstanceData : mInstanceDataCDO->GetInstanceData( ) ) {",
+				"\t\t\tif( IsValid( InstanceData.StaticMesh ) && !InstanceData.OverridenMaterials.Contains( nullptr ) ) {",
+				"\t\t\t\tFInstanceHandle* Handle;",
+				"\t\t\t\tAAbstractInstanceManager::SetInstanceFromDataStatic( this, FTransform( ), InstanceData, Handle, bInitializeHidden );",
+				"\t\t\t\tmInstanceHandles.Add( Handle );",
+				"\t\t\t}",
+				"\t\t}",
+				"\t}"
 			]
 		}
 	],
@@ -172,12 +188,12 @@
 			"Replace": "/**<KMods> DEFINE_LOG_CATEGORY(LogGame)*/"
 		},
 		{
-			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
-			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
+			"Find": "FACTORYGAME_API DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );",
+			"Replace": "/**<KMods> FACTORYGAME_API DECLARE_LOG_CATEGORY_EXTERN( LogGame, Log, All );*/"
 		},
 		{
-			"Find": "DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
-			"Replace": "/**<KMods> DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
+			"Find": "FACTORYGAME_API DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );",
+			"Replace": "/**<KMods> FACTORYGAME_API DECLARE_LOG_CATEGORY_EXTERN( LogBuilding, Warning, All );*/"
 		},
 		{
 			"Find": "LogGame",
