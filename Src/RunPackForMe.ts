@@ -37,7 +37,7 @@ for (const File of TargetDirScan) {
 		const destStream = FS.createWriteStream(ZipFile);
 		ZipStream.pipe(destStream).on('finish', () => {
 			StreamCountFinished++;
-			console.log('Finished ', StreamCountFinished, ' of ', StreamCount);
+			console.log('Finished ', StreamCountFinished, ' of ', StreamCount, File);
 		});
 		StreamCount++;
 	}
