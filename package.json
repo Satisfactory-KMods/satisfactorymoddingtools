@@ -1,6 +1,6 @@
 {
 	"name": "sfhelper",
-	"version": "1.15487.0",
+	"version": "1.0w .0",
 	"description": "",
 	"main": "Src/Config/ToolConfig.ts",
 	"scripts": {
@@ -15,8 +15,8 @@
 		"SFP": "tsc && node ./Dist/RunPackPatreonForMe.js SF+",
 		"MWave": "tsc && node ./Dist/RunPackPatreonForMe.js MWave",
 		"faxit": "tsc && node ./Dist/RunPackPatreonForMe.js faxit",
-		"RSS": "tsc && node ./Dist/RunPackPatreonForMe.js",
-		"p": "tsc && node ./Dist/RunPackPatreonForMe.js RSS",
+		"RSS": "tsc && node ./Dist/RunPackPatreonForMe.js RSS",
+		"p": "tsc && node ./Dist/RunPackPatreonForMe.js",
 		"test": "tsc && node ./Dist/test.js"
 	},
 	"author": "Kyrium",
