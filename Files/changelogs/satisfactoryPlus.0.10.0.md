@@ -1,3 +1,64 @@
+## RC 1 - 0.10.0-rc.1
+
+**Features**
+
+-   Update icons and model for following items
+    -   Tin Ingot
+    -   Quantum Processor
+    -   Stabilized Quantum Crystal
+    -   Stabilization Frame
+    -   Unstable Quantum Crystals (use old stablized quantum crystals model als placeholder)
+-   Update icons for following items
+    -   Quantum Cable Adapter (Placeholder)
+    -   Quantum Cable (Placeholder)
+
+**Bugfixes**
+
+-   potenzial fix for a crash if you close the game or load a other savegame
+
+## Alpha 8 - 0.10.0-alpha8
+
+**Bugfixes**
+
+-   Fix: missing ceiling belt support
+-   Fix: missing half foundation materials
+-   Fix Energymodule Mk.2 for the Modular Miner
+
+**Known Issues**
+
+-   Portable Miner also remove one from the stack if you look not on the ground and also if it was not places. (thats the tradeoff for the fix where all items was removed from the stack if you place one)
+
+---
+
+## Alpha 7 - 0.10.0-alpha7
+
+**Bugfixes**
+
+-   Faxit: potential fix for crash if a inventory slot can't be found
+-   Faxit: fix initialisation of the network inventory
+
+**Known Issues**
+
+-   Portable Miner also remove one from the stack if you look not on the ground and also if it was not places. (thats the tradeoff for the fix where all items was removed from the stack if you place one)
+
+---
+
+## Alpha 6 - 0.10.0-alpha6
+
+**Bugfixes**
+
+-   Fix some small display issues in the ingame wiki
+-   Potential fix for pipeline crash
+-   Fix more duplicated schematics
+-   Fix missing texture for some items
+-   Fix duplicated needs for pipeline pump mk2
+
+**Known Issues**
+
+-   Portable Miner also remove one from the stack if you look not on the ground and was not places. (thats the tradeoff for the fix above)
+
+---
+
 ## Alpha 5 - 0.10.0-alpha5
 
 **Dependencies**
