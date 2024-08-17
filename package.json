@@ -13,7 +13,7 @@
 		"upgradevers": "tsx ./Src/RunGithubHeaderPatch.ts && tsx ./Src/RunVersionHelper.ts",
 		"locCopy": "tsc && node ./Src/RunLocCopyHelper.ts",
 		"packForMe": "tsx ./Src/RunPackForMe.ts",
-		"SFP": "tsx --watch ./Src/RunPackForMe.ts SFP",
+		"SFP": "tsx ./Src/RunPackForMe.ts SFP",
 		"MWave": "tsx ./Src/RunPackForMe.ts MWave",
 		"faxit": "tsx ./Src/RunPackForMe.ts faxit",
 		"RSS": "tsx ./Src/RunPackForMe.ts RSS",
