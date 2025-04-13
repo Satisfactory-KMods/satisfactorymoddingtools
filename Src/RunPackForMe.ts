@@ -1,16 +1,16 @@
-import * as Compress from 'compressing';
-import { createWriteStream, existsSync } from 'fs';
-import { mkdir, readdir, rm, writeFile } from 'fs/promises';
-import { join } from 'path';
-import { GeneralConfig, PackHelperConfig } from './Config/ToolConfig';
+import { createWriteStream, existsSync } from "fs";
+import { join } from "path";
+import * as Compress from "compressing";
+import { mkdir, readdir, rm, writeFile } from "fs/promises";
+import { GeneralConfig, PackHelperConfig } from "./Config/ToolConfig";
 
 // create folder for working and target
-const sourcePath = join(GeneralConfig.ProjectFolder, 'Saved/ArchivedPlugins');
-const workingDir = join(GeneralConfig.ProjectFolder, 'KMod_Devs', 'working');
-const targetDir = join(GeneralConfig.ProjectFolder, 'KMod_Devs', 'public');
-let target: string | undefined = process.argv.splice(2).at(0);
+const sourcePath = join(GeneralConfig.ProjectFolder, "Saved/ArchivedPlugins");
+const workingDir = join(GeneralConfig.ProjectFolder, "KMod_Devs", "working");
+const targetDir = join(GeneralConfig.ProjectFolder, "KMod_Devs", "public");
+const target: string | undefined = process.argv.splice(2).at(0);
 if (!target) {
-	console.error('No target specified');
+	console.error("No target specified");
 	process.exit(0);
 }
 
@@ -34,7 +34,7 @@ mkdir(workingDir, { recursive: true });
 async function writeZip(zipStream: Compress.zip.Stream, target: string) {
 	return new Promise<void>((resolve, reject) => {
 		const destStream = createWriteStream(target);
-		zipStream.pipe(destStream).on('finish', resolve).on('error', reject);
+		zipStream.pipe(destStream).on("finish", resolve).on("error", reject);
 	});
 }
 
@@ -46,11 +46,15 @@ const foundMods = new Set<string>();
 
 const stream = new Compress.zip.Stream();
 
-for (const r of ['Windows', 'WindowsServer', 'LinuxServer']) {
+for (const r of ["Windows", "WindowsServer", "LinuxServer"]) {
 	const dir = join(workingDir, r);
 	for (const file of await readdir(sourcePath, { withFileTypes: true })) {
-		if (!file.isFile() && file.name !== 'KMod_Devs' && settings.Mods.some((r) => r.toLowerCase() === file.name.toLowerCase())) {
-			let fullPath = join(sourcePath, file.name);
+		if (
+			!file.isFile() &&
+			file.name !== "KMod_Devs" &&
+			settings.Mods.some((r) => r.toLowerCase() === file.name.toLowerCase())
+		) {
+			const fullPath = join(sourcePath, file.name);
 			const modFiles = join(fullPath, `${file.name}-${r}.zip`);
 			const target = join(dir, file.name);
 
@@ -82,7 +86,10 @@ for (const r of ['Windows', 'WindowsServer', 'LinuxServer']) {
 		//streamCount++;
 	}
 
-	const target = join(targetDir, `${settings.MainMod}-${r}.${settings.SubVersion}.zip`);
+	const target = join(
+		targetDir,
+		`${settings.MainMod}-${r}.${settings.SubVersion}.zip`,
+	);
 	await Compress.zip.compressDir(dir, target);
 	//await writeZip(stream, target);
 	console.log(`Finished ${target}`);
@@ -92,13 +99,20 @@ for (const r of ['Windows', 'WindowsServer', 'LinuxServer']) {
 
 if (settings.Mods.some((r) => !foundMods.has(r.toLowerCase()))) {
 	console.error(settings.Mods.filter((r) => !foundMods.has(r.toLowerCase())));
-	throw new Error('Not all mods found');
+	throw new Error("Not all mods found");
 }
 
-const lastSubVersionNum = Number(settings.SubVersion.substring(settings.SubVersion.lastIndexOf('-') + 1));
-let newSubVersionNum = settings.SubVersion.substring(0, settings.SubVersion.lastIndexOf('-') + 1) + (lastSubVersionNum + 1).toString();
-const config = await (await import(join('Files/Config/Config.json'))).default;
+const lastSubVersionNum = Number(
+	settings.SubVersion.substring(settings.SubVersion.lastIndexOf("-") + 1),
+);
+const newSubVersionNum =
+	settings.SubVersion.substring(0, settings.SubVersion.lastIndexOf("-") + 1) +
+	(lastSubVersionNum + 1).toString();
+const config = await (await import(join("Files/Config/Config.json"))).default;
 if (config) {
 	config.PackHelper.Mods[target].SubVersion = newSubVersionNum;
-	await writeFile(join('Files/Config/Config.json'), JSON.stringify(config, null, 4));
+	await writeFile(
+		join("Files/Config/Config.json"),
+		JSON.stringify(config, null, 4),
+	);
 }

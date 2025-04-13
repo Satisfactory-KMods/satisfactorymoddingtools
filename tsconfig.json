@@ -17,7 +17,13 @@
 		"noImplicitAny": true,
 		"typeRoots": ["node_modules/@types", "./src/types"],
 		"sourceMap": true,
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"plugins": [
+			{
+				"name": "@0no-co/graphqlsp",
+				"schema": "./Src/ficsit-cli/api/schema.graphql"
+			}
+		]
 	},
 	"include": ["./src/**/*.ts"],
 	"exclude": ["node_modules", "dist"]
