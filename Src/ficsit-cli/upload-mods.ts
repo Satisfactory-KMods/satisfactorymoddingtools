@@ -74,12 +74,8 @@ for (const group of modGroups) {
 			const exe = join(import.meta.dirname, 'exe', 'ficsit_windows_amd64.exe');
 
 			const APIURL = 'https://api.ficsit.app';
-			console.log(
-				'command:',
-				`& ${exe} smr upload --api-base "${APIURL}" --api-key "${FICSIT_TOKEN}" "${modId}" "${archivePath}" "[PRE-RELEASE-VERSION] Read description in the mod page of SatsifactoryPlus on Ficsit.app for more information."`
-			);
 
-			await $`& ${exe} smr upload --api-base ${APIURL} --api-key ${FICSIT_TOKEN} ${modId} ${archivePath} "[PRE-RELEASE-VERSION] Read description in the mod page of SatsifactoryPlus on Ficsit.app for more information."`;
+			await $`& ${exe} smr upload --api-base ${APIURL} --api-key ${FICSIT_TOKEN} ${modId} ${archivePath} "Fix Dependency version for RP, FF, Fluid Extras to use exact version"`;
 			return mod;
 		})
 	).then((result) => {
