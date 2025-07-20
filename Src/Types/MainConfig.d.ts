@@ -59,6 +59,7 @@ export type PackHelper_Element = {
 	MainMod: string;
 	ModName: string;
 	Mods: string[];
+	Targets: string[]
 };
 
 export type MainConfig = {

@@ -6,6 +6,10 @@ import 'zx/globals';
 import { getModId, hasVersion } from './api/helper/getModInfos';
 config();
 usePwsh();
+// Force use of PowerShell Core (pwsh) with explicit path
+// $.shell = 'C:\\Users\\olli1\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe';
+// $.quote = (arg) => `'${arg.replace(/'/g, "''")}'`; // PowerShell quoting function
+// console.log('Using PowerShell Core (pwsh) with explicit path');
 const FICSIT_TOKEN = process.env.FICSIT_TOKEN;
 if (!FICSIT_TOKEN) {
 	throw new Error('FICSIT_TOKEN is not set in the environment variables');
@@ -23,10 +27,16 @@ $.log = (msg) => {
 	console.log(`[${formattedDate}]: ${msg.data.toString()}`);
 };
 
-const modingRootDir = 'E:\\SF_Modding';
-const modGroups = [['KBFL', 'KAPI'], ['KPrivateCodeLib', 'KUI'], ['KLib'], ['SatisfactoryPlus']];
+const modingRootDir = 'C:\\Modding';
+const modGroups = [
+	['KBFL', 'KAPI'],
+	['KPrivateCodeLib', 'KUI'],
+	['KLib'],
+	['allGassesAreNowFluids', 'allFluidsAreGasses', 'AwesomeSinkStorage'],
+	['MoreSwatchSlots', 'PneumaticFrackingMachine', 'KBlueprintDesignPlus'] /*, ['SatisfactoryPlus']*/
+];
 
-const defaultMdDescription = `[PRE-RELEASE-VERSION] Read description in the mod page of SatsifactoryPlus on Ficsit.app for more information.
+const sfpDesc = `[PRE-RELEASE-VERSION] Read description in the mod page of SatsifactoryPlus on Ficsit.app for more information.
 
 ## Whats in the pre-release version?
 - Overhaul of the mod 
@@ -50,6 +60,22 @@ Thats mean this version is not the final version and may contain bugs or incompl
 - And many WIP features
 - Faxit is currently not implemented in the mod
 `;
+
+const defaultMsg = `Updated to Satisfactory 1.1`;
+const releaseNotes = {
+	KBFL: `Updated to Satisfactory 1.1`,
+	KAPI: `Updated to Satisfactory 1.1`,
+	KPrivateCodeLib: `Updated to Satisfactory 1.1`,
+	KUI: `Updated to Satisfactory 1.1`,
+	KLib: `Updated to Satisfactory 1.1`,
+	allGassesAreNowFluids: `Updated to Satisfactory 1.1`,
+	allFluidsAreGasses: `Updated to Satisfactory 1.1`,
+	AwesomeSinkStorage: `Updated to Satisfactory 1.1`,
+	MoreSwatchSlots: `Updated to Satisfactory 1.1`,
+	PneumaticFrackingMachine: `Updated to Satisfactory 1.1`,
+	KBlueprintDesignPlus: `Updated to Satisfactory 1.1`,
+	SatisfactoryPlus: `${sfpDesc}`
+};
 
 for (const group of modGroups) {
 	await Promise.allSettled(
@@ -75,7 +101,8 @@ for (const group of modGroups) {
 
 			const APIURL = 'https://api.ficsit.app';
 
-			await $`& ${exe} smr upload --api-base ${APIURL} --api-key ${FICSIT_TOKEN} ${modId} ${archivePath} "Fix Dependency version for RP, FF, Fluid Extras to use exact version"`;
+			// @ts-ignore
+			await $`& ${exe} smr upload --api-base ${APIURL} --api-key ${FICSIT_TOKEN} ${modId} ${archivePath} ${releaseNotes[mod] ?? defaultMsg}`;
 			return mod;
 		})
 	).then((result) => {

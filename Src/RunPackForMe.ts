@@ -25,7 +25,7 @@ if (existsSync(workingDir)) {
 }
 
 if (existsSync(targetDir)) {
-	await rm(targetDir, { recursive: true });
+	// await rm(targetDir, { recursive: true });
 }
 
 mkdir(targetDir, { recursive: true });
@@ -46,7 +46,7 @@ const foundMods = new Set<string>();
 
 const stream = new Compress.zip.Stream();
 
-for (const r of ["Windows", "WindowsServer", "LinuxServer"]) {
+for (const r of settings.Targets) {
 	const dir = join(workingDir, r);
 	for (const file of await readdir(sourcePath, { withFileTypes: true })) {
 		if (

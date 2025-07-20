@@ -15,12 +15,13 @@
 		"locCopy": "tsc && node ./Src/RunLocCopyHelper.ts",
 		"packForMe": "tsx ./Src/RunPackForMe.ts",
 		"SFP": "tsx ./Src/RunPackForMe.ts SFP",
+		"ALL": "tsx ./Src/RunPackForMeAll.ts ALL",
 		"MWave": "tsx ./Src/RunPackForMe.ts MWave",
 		"faxit": "tsx ./Src/RunPackForMe.ts faxit",
 		"RSS": "tsx ./Src/RunPackForMe.ts RSS",
 		"p": "tsx ./Src/RunPackForMe.ts",
 		"test": "tsx ./Src/test.ts",
-		"upload-mods": "tsx ./ficsit-cli/upload-mods.ts"
+		"upload-mods": "tsx ./Src/ficsit-cli/upload-mods.ts"
 	},
 	"author": "Kyrium",
 	"license": "ISC",
